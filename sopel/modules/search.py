@@ -84,7 +84,7 @@ def search(bot, trigger):
             bu = '(extremely long link)'
         if len(du) > 150:
             du = '(extremely long link)'
-        result = '%s (b), %s (d)' % (bu, du)
+        result = '%s %s' % (bu, du)
 
     bot.reply(result)
 
