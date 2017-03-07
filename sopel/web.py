@@ -18,6 +18,8 @@ import re
 import sys
 import urllib
 import requests
+reload(sys)
+sys.setdefaultencoding('utf8')
 
 from sopel import __version__
 from sopel.tools import deprecated
@@ -86,7 +88,8 @@ def get(uri, timeout=20, headers=None, return_headers=False,
         headers = default_headers
     else:
         tmp = default_headers.copy()
-        headers = tmp.update(headers)
+        tmp.update(headers)
+        headers = tmp
     u = requests.get(uri, timeout=timeout, headers=headers, verify=verify_ssl)
     bytes = u.content
     u.close()
@@ -116,7 +119,8 @@ def head(uri, timeout=20, headers=None, verify_ssl=True):
         headers = default_headers
     else:
         tmp = default_headers.copy()
-        headers = tmp.update(headers)
+        tmp.update(headers)
+        headers = tmp
     u = requests.get(uri, timeout=timeout, headers=headers, verify=verify_ssl)
     info = u.headers
     u.close()
@@ -177,7 +181,8 @@ def get_urllib_object(uri, timeout, headers=None, verify_ssl=True, data=None):
         headers = default_headers
     else:
         tmp = default_headers.copy()
-        headers = tmp.update(headers)
+        tmp.update(headers)
+        headers = tmp
     if data is not None:
         response = requests.post(uri, timeout=timeout, verify=verify_ssl,
                                  data=data, headers=headers)
