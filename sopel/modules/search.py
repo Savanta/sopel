@@ -9,6 +9,7 @@ from sopel import web
 from sopel.module import commands, example
 import json
 import sys
+import unicodedata
 
 if sys.version_info.major < 3:
     from urllib import quote_plus
@@ -66,33 +67,7 @@ def duck_api(query):
     else:
         return None
 
-
-@commands('duck', 'ddg', 'g')
-@example('.duck privacy or .duck !mcwiki obsidian')
-def duck(bot, trigger):
-    """Queries Duck Duck Go for the specified input."""
-    query = trigger.group(2)
-    if not query:
-        return bot.reply('.ddg what?')
-
-    # If the API gives us something, say it and stop
-    result = duck_api(query)
-    if result:
-        bot.reply(result)
-        return
-
-    # Otherwise, look it up on the HTMl version
-    uri = duck_search(query)
-
-    if uri:
-        bot.reply(uri)
-        if 'last_seen_url' in bot.memory:
-            bot.memory['last_seen_url'][trigger.sender] = uri
-    else:
-        bot.reply("No results found for '%s'." % query)
-
-
-@commands('search')
+@commands('search', 'duck', 'ddg', 'g')
 @example('.search nerdfighter')
 def search(bot, trigger):
     """Searches Bing and Duck Duck Go."""
